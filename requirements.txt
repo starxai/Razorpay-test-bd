@@ -1,4 +1,7 @@
 fastapi
 uvicorn
-motor
+pydantic
+razorpay
+pymongo
 python-dotenv
+dnspython
