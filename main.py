@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Request, Header, HTTPException
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from app.topup_wallet import RazorpayOrderRequest
@@ -85,6 +86,10 @@ async def check_wallet(user_id: str):
 @app.get("/test")
 async def root():
     return {"message": "Unified LLM Backend Running"}
+
+@app.options("/{rest_of_path:path}")
+async def preflight_handler(rest_of_path: str):
+    return JSONResponse(content={"status": "CORS preflight success"})
 
 # To make it automatic:
 
