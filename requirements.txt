@@ -5,3 +5,4 @@ razorpay
 pymongo
 python-dotenv
 dnspython
+motor
