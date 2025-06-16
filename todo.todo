@@ -1,0 +1,11 @@
+pip install -r requirements.txt
+uvicorn main:app --reload
+
+conda activate yolo_envPIP
+
+Expose webhook:
+--> ngrok http 8000
+--> Add webhook in Razorpay Dashboard:
+--> https://<ngrok-url>/webhook
+--> Call /create-order from your React frontend
+--> On payment success, check /wallet/{user_id} to see updated balance

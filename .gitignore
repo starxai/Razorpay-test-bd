@@ -1,0 +1,60 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.env
+.env.*
+
+# Python egg files
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# VSCode config
+.vscode/
+
+# macOS / Windows system files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Docker-related
+*.pid
+*.tar
+*.img
+*.gz
+*.bak
+
+# Pytest / coverage
+.cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# MyPy / Pylint
+.mypy_cache/
+.dmypy.json
+.pyre/
+
+# Model weights or large artifacts
+*.pt
+*.bin
+*.safetensors
+models/
+checkpoints/
+
+# Ignore compiled binaries
+*.so
+*.pyd
+
+# Ignore local Docker compose override
+docker-compose.override.yml
