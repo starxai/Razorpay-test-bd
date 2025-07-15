@@ -30,16 +30,23 @@ razorpay_client = razorpay.Client(auth=(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET))
 
 @app.post("/create-order")
 async def create_order(payload: RazorpayOrderRequest):
-    amount_in_paise = int(payload.amount * 100)
-    order = razorpay_client.order.create({
-        "amount": amount_in_paise,
-        "currency": "INR",
-        "payment_capture": 1,
-        "notes": {
-            "user_id": payload.user_id
-        }
-    })
-    return order
+    try:
+        amount_in_paise = int(payload.amount * 100)
+        order = razorpay_client.order.create({
+            "amount": amount_in_paise,
+            "currency": "INR",
+            "payment_capture": 1,
+            "notes": {
+                "user_id": payload.user_id
+            }
+        })
+        return order
+    except Exception as e:
+        print(f"❌ Razorpay order creation failed: {str(e)}")
+        return JSONResponse(
+            status_code=500,
+            content={"error": "Failed to create order", "details": str(e)}
+        )
 
 @app.post("/webhook")
 async def razorpay_webhook(request: Request, x_razorpay_signature: str = Header(None)):
@@ -86,33 +93,4 @@ async def check_wallet(user_id: str):
 
 @app.get("/test")
 async def root():
-    return {"message": "Unified LLM Backend Running"}
-
-@app.options("/{rest_of_path:path}")
-async def preflight_handler(rest_of_path: str):
-    return JSONResponse(content={"status": "CORS preflight success"})
-
-# To make it automatic:
-
-# When calling Razorpay Checkout, pass "email" in the prefill object
-
-# Or include email in the backend Razorpay order's notes field
-#     const options = {
-#   key: "YOUR_RAZORPAY_KEY",
-#   amount: 10000,
-#   currency: "INR",
-#   order_id: "order_xyz",
-#   prefill: {
-#     email: "user@example.com", // ✅ this triggers Razorpay to send receipt
-#     contact: "9876543210"
-#   },
-#   notes: {
-#     user_id: "abc123"
-#   },
-#   handler: function (response) {
-#     alert("Payment complete!");
-#   }
-# };
-
-# const rzp = new Razorpay(options);
-# rzp.open();
+    return {"message": "razorpay Backend Running"}
